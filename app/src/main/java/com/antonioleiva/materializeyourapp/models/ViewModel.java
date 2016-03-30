@@ -17,17 +17,42 @@
 package com.antonioleiva.materializeyourapp.models;
 
 import android.databinding.BindingAdapter;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.antonioleiva.materializeyourapp.widgets.SquareImageView;
 import com.squareup.picasso.Picasso;
 
-public class ViewModel {
+public class ViewModel implements Parcelable {
+    public static final Creator<ViewModel> CREATOR = new Creator<ViewModel>() {
+        @Override
+        public ViewModel createFromParcel(Parcel in) {
+            return new ViewModel(in);
+        }
+
+        @Override
+        public ViewModel[] newArray(int size) {
+            return new ViewModel[size];
+        }
+    };
     private String text;
     private String image;
 
     public ViewModel(String text, String image) {
         this.text = text;
         this.image = image;
+    }
+
+    protected ViewModel(Parcel in) {
+        text = in.readString();
+        image = in.readString();
+    }
+
+    @BindingAdapter({"bind:imageUrl"})
+    public static void loadImage(SquareImageView view, String imageUrl) {
+        Picasso.with(view.getContext())
+                .load(imageUrl)
+                .into(view);
     }
 
     public String getText() {
@@ -38,10 +63,14 @@ public class ViewModel {
         return image;
     }
 
-    @BindingAdapter({"bind:imageUrl"})
-    public static void loadImage(SquareImageView view, String imageUrl) {
-        Picasso.with(view.getContext())
-                .load(imageUrl)
-                .into(view);
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(text);
+        dest.writeString(image);
     }
 }

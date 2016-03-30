@@ -23,10 +23,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.antonioleiva.materializeyourapp.databinding.ItemRecyclerBinding;
-import com.antonioleiva.materializeyourapp.models.NewsBeans;
 import com.antonioleiva.materializeyourapp.models.ViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements View.OnClickListener {
@@ -34,12 +32,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<ViewModel> items;
     private OnItemClickListener onItemClickListener;
 
-    public RecyclerViewAdapter(NewsBeans beans) {
-        this.items = new ArrayList<ViewModel>();
-        for (NewsBeans.ArticlesBean articlesBean : beans.getArticles()) {
-            ViewModel model = new ViewModel(articlesBean.getTitle(), articlesBean.getImages().get(0).getUrl());
-            items.add(model);
-        }
+    public RecyclerViewAdapter(List<ViewModel> items) {
+        this.items = items;
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -70,6 +64,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         onItemClickListener.onItemClick(v, (ViewModel) v.getTag());
     }
 
+    public List<ViewModel> getItems() {
+        return items;
+    }
+
+    public interface OnItemClickListener {
+
+        void onItemClick(View view, ViewModel viewModel);
+
+    }
+
     protected static class ViewHolder extends RecyclerView.ViewHolder {
         final ViewDataBinding binding;
 
@@ -77,11 +81,5 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(binding.getRoot());
             this.binding = binding;
         }
-    }
-
-    public interface OnItemClickListener {
-
-        void onItemClick(View view, ViewModel viewModel);
-
     }
 }

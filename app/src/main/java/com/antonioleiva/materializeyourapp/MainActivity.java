@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
     public static final String DATA_URL = "http://api.k.sohu.com/api/open/channel/newsList.go?channelId=1&page=1&num=20&showContent=0&refer=samsungCocktail";
 
-    private static List<ViewModel> items = new ArrayList<>();
 
 //    static {
 //        for (int i = 1; i <= 10; i++) {
@@ -87,6 +86,24 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (recyclerView.getAdapter() != null) {
+            outState.putParcelableArrayList("data", (ArrayList) ((RecyclerViewAdapter) recyclerView.getAdapter()).getItems());
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState.containsKey("data")) {
+            RecyclerViewAdapter adapter = new RecyclerViewAdapter(savedInstanceState.<ViewModel>getParcelableArrayList("data"));
+            adapter.setOnItemClickListener(MainActivity.this);
+            recyclerView.setAdapter(adapter);
+        }
+    }
+
+    @Override
     public void onEnterAnimationComplete() {
         super.onEnterAnimationComplete();
         setRecyclerAdapter(recyclerView);
@@ -107,7 +124,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             public void onResponse(JSONObject response) {
                 Gson gson = new Gson();
                 NewsBeans news = gson.fromJson(response.toString(), NewsBeans.class);
-                RecyclerViewAdapter adapter = new RecyclerViewAdapter(news);
+                List<ViewModel> items = new ArrayList<>();
+                for (NewsBeans.ArticlesBean articlesBean : news.getArticles()) {
+                    ViewModel model = new ViewModel(articlesBean.getTitle(), articlesBean.getImages().get(0).getUrl());
+                    items.add(model);
+                }
+                RecyclerViewAdapter adapter = new RecyclerViewAdapter(items);
                 adapter.setOnItemClickListener(MainActivity.this);
                 recyclerView.setAdapter(adapter);
             }
