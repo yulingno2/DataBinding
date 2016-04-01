@@ -18,6 +18,8 @@ package com.antonioleiva.materializeyourapp;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.databinding.DataBindingUtil;
+import android.databinding.OnRebindCallback;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
@@ -29,29 +31,22 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
-import android.support.v7.widget.Toolbar;
 import android.transition.Slide;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
+import com.antonioleiva.materializeyourapp.databinding.ActivityDetailBinding;
 import com.antonioleiva.materializeyourapp.models.ViewModel;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private static final String EXTRA_IMAGE = "com.antonioleiva.materializeyourapp.extraImage";
-    private static final String EXTRA_TITLE = "com.antonioleiva.materializeyourapp.extraTitle";
+    private static final String EXTRA_MODEL = "com.antonioleiva.materializeyourapp.extraModel";
     private CollapsingToolbarLayout collapsingToolbarLayout;
-
+    private ActivityDetailBinding binding;
     public static void navigate(AppCompatActivity activity, View transitionImage, ViewModel viewModel) {
         Intent intent = new Intent(activity, DetailActivity.class);
-        intent.putExtra(EXTRA_IMAGE, viewModel.getImageUrl());
-        intent.putExtra(EXTRA_TITLE, viewModel.getText());
-
-        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, transitionImage, EXTRA_IMAGE);
+        intent.putExtra(EXTRA_MODEL, viewModel);
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, transitionImage, EXTRA_MODEL);
         ActivityCompat.startActivity(activity, intent, options.toBundle());
     }
 
@@ -59,37 +54,31 @@ public class DetailActivity extends AppCompatActivity {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initActivityTransitions();
-        setContentView(R.layout.activity_detail);
-
-        ViewCompat.setTransitionName(findViewById(R.id.app_bar_layout), EXTRA_IMAGE);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
+//        setContentView(R.layout.activity_detail);
+        binding.setNews(getIntent().<ViewModel>getParcelableExtra(EXTRA_MODEL));
+        ViewCompat.setTransitionName(binding.appBarLayout, EXTRA_MODEL);
         supportPostponeEnterTransition();
 
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        String itemTitle = getIntent().getStringExtra(EXTRA_TITLE);
-        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbarLayout.setTitle(itemTitle);
+        collapsingToolbarLayout = binding.collapsingToolbar;
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
+        binding.addOnRebindCallback(new OnRebindCallback<ActivityDetailBinding>() {
 
-        final ImageView image = (ImageView) findViewById(R.id.image);
-        Picasso.with(this).load(getIntent().getStringExtra(EXTRA_IMAGE)).into(image, new Callback() {
-            @Override public void onSuccess() {
-                Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
+            @Override
+            public void onBound(ActivityDetailBinding binding) {
+                Bitmap bitmap = ((BitmapDrawable) binding.image.getDrawable()).getBitmap();
                 Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
                     public void onGenerated(Palette palette) {
                         applyPalette(palette);
                     }
                 });
             }
-
-            @Override public void onError() {
-
-            }
         });
 
-        TextView title = (TextView) findViewById(R.id.title);
-        title.setText(itemTitle);
+        binding.executePendingBindings();
     }
 
     @Override public boolean dispatchTouchEvent(MotionEvent motionEvent) {
@@ -114,7 +103,7 @@ public class DetailActivity extends AppCompatActivity {
         int primary = getResources().getColor(R.color.primary);
         collapsingToolbarLayout.setContentScrimColor(palette.getMutedColor(primary));
         collapsingToolbarLayout.setStatusBarScrimColor(palette.getDarkMutedColor(primaryDark));
-        updateBackground((FloatingActionButton) findViewById(R.id.fab), palette);
+        updateBackground(binding.fab, palette);
         supportStartPostponedEnterTransition();
     }
 

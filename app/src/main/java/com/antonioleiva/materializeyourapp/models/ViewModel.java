@@ -48,7 +48,7 @@ public class ViewModel implements Parcelable {
         image = in.readString();
     }
 
-    @BindingAdapter({"bind:imageUrl"})
+    @BindingAdapter({"android:src"})
     public static void loadImage(SquareImageView view, String imageUrl) {
         Picasso.with(view.getContext())
                 .load(imageUrl)

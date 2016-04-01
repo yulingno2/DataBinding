@@ -126,7 +126,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                 NewsBeans news = gson.fromJson(response.toString(), NewsBeans.class);
                 List<ViewModel> items = new ArrayList<>();
                 for (NewsBeans.ArticlesBean articlesBean : news.getArticles()) {
-                    ViewModel model = new ViewModel(articlesBean.getTitle(), articlesBean.getImages().get(0).getUrl());
+                    ViewModel model = new ViewModel(articlesBean.getTitle(),
+                            articlesBean.getImages() != null ? articlesBean.getImages().get(0).getUrl() : articlesBean.getListPic());
                     items.add(model);
                 }
                 RecyclerViewAdapter adapter = new RecyclerViewAdapter(items);

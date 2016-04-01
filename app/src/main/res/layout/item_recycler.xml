@@ -15,8 +15,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -43,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/black"
                 android:scaleType="centerCrop"
-                app:imageUrl="@{news.imageUrl}" />
+                android:src="@{news.imageUrl}" />
 
             <TextView
                 android:id="@+id/text"
