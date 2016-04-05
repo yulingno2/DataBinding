@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
     public static final String AVATAR_URL = "http://lorempixel.com/200/200/people/1/";
 
-    public static final String DATA_URL = "http://api.k.sohu.com/api/open/channel/newsList.go?channelId=1&page=1&num=20&showContent=0&refer=samsungCocktail";
+    public static final String DATA_URL = "http://api.k.sohu.com/api/open/channel/newsList.go?channelId=1&page=1&num=20&showContent=1&refer=samsungCocktail";
 
 
 //    static {
@@ -128,7 +128,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                 List<ViewModel> items = new ArrayList<>();
                 for (NewsBeans.ArticlesBean articlesBean : news.getArticles()) {
                     ViewModel model = new ViewModel(articlesBean.getTitle(),
-                            articlesBean.getImages() != null ? articlesBean.getImages().get(0).getUrl() : articlesBean.getListPic());
+                            articlesBean.getImages() != null ? articlesBean.getImages().get(0).getUrl() : articlesBean.getListPic(),
+                            articlesBean.getCtext());
                     items.add(model);
                 }
                 RecyclerViewAdapter adapter = new RecyclerViewAdapter(items);

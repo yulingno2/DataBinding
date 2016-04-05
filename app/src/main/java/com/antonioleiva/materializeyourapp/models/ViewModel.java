@@ -37,15 +37,18 @@ public class ViewModel implements Parcelable {
     };
     private String text;
     private String image;
+    private String content;
 
-    public ViewModel(String text, String image) {
+    public ViewModel(String text, String image, String content) {
         this.text = text;
         this.image = image;
+        this.content = content;
     }
 
     protected ViewModel(Parcel in) {
         text = in.readString();
         image = in.readString();
+        content = in.readString();
     }
 
     @BindingAdapter({"android:src"})
@@ -63,6 +66,10 @@ public class ViewModel implements Parcelable {
         return image;
     }
 
+    public String getContent() {
+        return content;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -72,5 +79,6 @@ public class ViewModel implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(text);
         dest.writeString(image);
+        dest.writeString(content);
     }
 }

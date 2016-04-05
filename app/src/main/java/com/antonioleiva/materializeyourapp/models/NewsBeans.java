@@ -37,6 +37,7 @@ public class NewsBeans {
     public static class ArticlesBean {
         private String title;
         private String listPic;
+        private String ctext;
         /**
          * url : http://n1.itc.cn/img7/adapt/wb/common/2016/03/30/145931006303999600_639_1136.JPEG
          * width : 639
@@ -67,6 +68,14 @@ public class NewsBeans {
 
         public void setImages(List<ImagesBean> images) {
             this.images = images;
+        }
+
+        public String getCtext() {
+            return ctext;
+        }
+
+        public void setCtext(String ctext) {
+            this.ctext = ctext;
         }
 
         public static class ImagesBean {
