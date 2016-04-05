@@ -36,7 +36,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.antonioleiva.materializeyourapp.models.NewsBeans;
-import com.antonioleiva.materializeyourapp.models.ViewModel;
+import com.antonioleiva.materializeyourapp.models.NewsModel;
 import com.antonioleiva.materializeyourapp.picasso.CircleTransform;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
 //    static {
 //        for (int i = 1; i <= 10; i++) {
-//            items.add(new ViewModel("Item " + i, "http://n1.itc.cn/img7/adapt/wb/focal/2016/03/30/145931004357546545_180_180.JPEG"));
+//            items.add(new NewsModel("Item " + i, "http://n1.itc.cn/img7/adapt/wb/focal/2016/03/30/145931004357546545_180_180.JPEG"));
 //        }
 //    }
 
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         if (savedInstanceState.containsKey("data")) {
-            RecyclerViewAdapter adapter = new RecyclerViewAdapter(savedInstanceState.<ViewModel>getParcelableArrayList("data"));
+            RecyclerViewAdapter adapter = new RecyclerViewAdapter(savedInstanceState.<NewsModel>getParcelableArrayList("data"));
             adapter.setOnItemClickListener(MainActivity.this);
             recyclerView.setAdapter(adapter);
         }
@@ -124,9 +124,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             public void onResponse(JSONObject response) {
                 Gson gson = new Gson();
                 NewsBeans news = gson.fromJson(response.toString(), NewsBeans.class);
-                List<ViewModel> items = new ArrayList<>();
+                List<NewsModel> items = new ArrayList<>();
                 for (NewsBeans.ArticlesBean articlesBean : news.getArticles()) {
-                    ViewModel model = new ViewModel(articlesBean.getTitle(),
+                    NewsModel model = new NewsModel(articlesBean.getTitle(),
                             articlesBean.getImages() != null ? articlesBean.getImages().get(0).getUrl() : articlesBean.getListPic(),
                             articlesBean.getCtext());
                     items.add(model);
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     }
 
     @Override
-    public void onItemClick(View view, ViewModel viewModel) {
-        DetailActivity.navigate(this, view.findViewById(R.id.image), viewModel);
+    public void onItemClick(View view, NewsModel newsModel) {
+        DetailActivity.navigate(this, view.findViewById(R.id.image), newsModel);
     }
 }

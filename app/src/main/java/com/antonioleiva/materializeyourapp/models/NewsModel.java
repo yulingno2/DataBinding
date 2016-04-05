@@ -23,29 +23,30 @@ import android.os.Parcelable;
 import com.antonioleiva.materializeyourapp.widgets.SquareImageView;
 import com.squareup.picasso.Picasso;
 
-public class ViewModel implements Parcelable {
-    public static final Creator<ViewModel> CREATOR = new Creator<ViewModel>() {
+public class NewsModel implements Parcelable {
+
+    public static final Creator<NewsModel> CREATOR = new Creator<NewsModel>() {
         @Override
-        public ViewModel createFromParcel(Parcel in) {
-            return new ViewModel(in);
+        public NewsModel createFromParcel(Parcel in) {
+            return new NewsModel(in);
         }
 
         @Override
-        public ViewModel[] newArray(int size) {
-            return new ViewModel[size];
+        public NewsModel[] newArray(int size) {
+            return new NewsModel[size];
         }
     };
     private String text;
     private String image;
     private String content;
 
-    public ViewModel(String text, String image, String content) {
+    public NewsModel(String text, String image, String content) {
         this.text = text;
         this.image = image;
         this.content = content;
     }
 
-    protected ViewModel(Parcel in) {
+    protected NewsModel(Parcel in) {
         text = in.readString();
         image = in.readString();
         content = in.readString();

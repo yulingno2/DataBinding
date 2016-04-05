@@ -23,16 +23,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.antonioleiva.materializeyourapp.databinding.ItemRecyclerBinding;
-import com.antonioleiva.materializeyourapp.models.ViewModel;
+import com.antonioleiva.materializeyourapp.models.NewsModel;
 
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements View.OnClickListener {
 
-    private List<ViewModel> items;
+    private List<NewsModel> items;
     private OnItemClickListener onItemClickListener;
 
-    public RecyclerViewAdapter(List<ViewModel> items) {
+    public RecyclerViewAdapter(List<NewsModel> items) {
         this.items = items;
     }
 
@@ -61,16 +61,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onClick(final View v) {
-        onItemClickListener.onItemClick(v, (ViewModel) v.getTag());
+        onItemClickListener.onItemClick(v, (NewsModel) v.getTag());
     }
 
-    public List<ViewModel> getItems() {
+    public List<NewsModel> getItems() {
         return items;
     }
 
     public interface OnItemClickListener {
 
-        void onItemClick(View view, ViewModel viewModel);
+        void onItemClick(View view, NewsModel newsModel);
 
     }
 

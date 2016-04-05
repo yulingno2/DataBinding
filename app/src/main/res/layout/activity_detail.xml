@@ -20,7 +20,7 @@
 
         <variable
             name="news"
-            type="com.antonioleiva.materializeyourapp.models.ViewModel" />
+            type="com.antonioleiva.materializeyourapp.models.NewsModel" />
 
     </data>
 

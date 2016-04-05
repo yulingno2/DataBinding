@@ -37,16 +37,17 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.antonioleiva.materializeyourapp.databinding.ActivityDetailBinding;
-import com.antonioleiva.materializeyourapp.models.ViewModel;
+import com.antonioleiva.materializeyourapp.models.NewsModel;
 
 public class DetailActivity extends AppCompatActivity {
 
     private static final String EXTRA_MODEL = "com.antonioleiva.materializeyourapp.extraModel";
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private ActivityDetailBinding binding;
-    public static void navigate(AppCompatActivity activity, View transitionImage, ViewModel viewModel) {
+
+    public static void navigate(AppCompatActivity activity, View transitionImage, NewsModel newsModel) {
         Intent intent = new Intent(activity, DetailActivity.class);
-        intent.putExtra(EXTRA_MODEL, viewModel);
+        intent.putExtra(EXTRA_MODEL, newsModel);
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, transitionImage, EXTRA_MODEL);
         ActivityCompat.startActivity(activity, intent, options.toBundle());
     }
@@ -57,7 +58,7 @@ public class DetailActivity extends AppCompatActivity {
         initActivityTransitions();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
 //        setContentView(R.layout.activity_detail);
-        binding.setNews(getIntent().<ViewModel>getParcelableExtra(EXTRA_MODEL));
+        binding.setNews(getIntent().<NewsModel>getParcelableExtra(EXTRA_MODEL));
         ViewCompat.setTransitionName(binding.appBarLayout, EXTRA_MODEL);
         supportPostponeEnterTransition();
 
