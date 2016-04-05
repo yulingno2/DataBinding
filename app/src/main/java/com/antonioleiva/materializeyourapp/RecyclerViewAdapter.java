@@ -49,7 +49,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.binding.setVariable(BR.news, items.get(position));
+        holder.binding.setVariable(com.antonioleiva.materializeyourapp.BR.news, items.get(position));
         holder.binding.getRoot().setTag(items.get(position));
         holder.binding.executePendingBindings();
     }
