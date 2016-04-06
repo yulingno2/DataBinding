@@ -16,12 +16,8 @@
 
 package com.antonioleiva.materializeyourapp.models;
 
-import android.databinding.BindingAdapter;
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import com.antonioleiva.materializeyourapp.widgets.SquareImageView;
-import com.squareup.picasso.Picasso;
 
 public class NewsModel implements Parcelable {
 
@@ -52,12 +48,12 @@ public class NewsModel implements Parcelable {
         content = in.readString();
     }
 
-    @BindingAdapter({"android:src"})
-    public static void loadImage(SquareImageView view, String imageUrl) {
-        Picasso.with(view.getContext())
-                .load(imageUrl)
-                .into(view);
-    }
+//    @BindingAdapter({"android:src"})
+//    public static void loadImage(SquareImageView view, String imageUrl) {
+//        Picasso.with(view.getContext())
+//                .load(imageUrl)
+//                .into(view);
+//    }
 
     public String getText() {
         return text;

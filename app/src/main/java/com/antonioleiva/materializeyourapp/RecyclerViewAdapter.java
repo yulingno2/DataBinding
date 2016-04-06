@@ -16,14 +16,15 @@
 
 package com.antonioleiva.materializeyourapp;
 
-import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.antonioleiva.materializeyourapp.databinding.ItemRecyclerBinding;
 import com.antonioleiva.materializeyourapp.models.NewsModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -42,16 +43,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ItemRecyclerBinding binding = ItemRecyclerBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        binding.getRoot().setOnClickListener(this);
-        return new ViewHolder(binding);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycler, parent, false);
+        v.setOnClickListener(this);
+        return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.binding.setVariable(com.antonioleiva.materializeyourapp.BR.news, items.get(position));
-        holder.binding.getRoot().setTag(items.get(position));
-        holder.binding.executePendingBindings();
+        NewsModel item = items.get(position);
+        holder.text.setText(item.getText());
+        holder.image.setImageBitmap(null);
+        Picasso.with(holder.image.getContext()).load(item.getImageUrl()).into(holder.image);
+        holder.itemView.setTag(item);
     }
 
     @Override
@@ -75,11 +78,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     protected static class ViewHolder extends RecyclerView.ViewHolder {
-        final ViewDataBinding binding;
+        public ImageView image;
+        public TextView text;
 
-        ViewHolder(ViewDataBinding binding) {
-            super(binding.getRoot());
-            this.binding = binding;
+        ViewHolder(View itemView) {
+            super(itemView);
+            image = (ImageView) itemView.findViewById(R.id.image);
+            text = (TextView) itemView.findViewById(R.id.text);
         }
     }
 }

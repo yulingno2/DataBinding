@@ -15,47 +15,36 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:orientation="vertical">
 
-        <variable
-            name="news"
-            type="com.antonioleiva.materializeyourapp.models.NewsModel" />
-    </data>
-
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_xsmall">
 
-        <LinearLayout
+        <com.antonioleiva.materializeyourapp.widgets.SquareImageView
+            android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/spacing_xsmall">
+            android:background="@android:color/black"
+            android:scaleType="centerCrop" />
 
-            <com.antonioleiva.materializeyourapp.widgets.SquareImageView
-                android:id="@+id/image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/black"
-                android:scaleType="centerCrop"
-                android:src="@{news.imageUrl}" />
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:padding="@dimen/spacing_large"
+            android:textColor="@android:color/white" />
 
-            <TextView
-                android:id="@+id/text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/black"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:padding="@dimen/spacing_large"
-                android:text="@{news.text}"
-                android:textColor="@android:color/white" />
+    </LinearLayout>
 
-        </LinearLayout>
-
-    </FrameLayout>
-</layout>
+</FrameLayout>
