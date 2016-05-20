@@ -21,7 +21,7 @@
 
         <variable
             name="news"
-            type="com.antonioleiva.materializeyourapp.models.NewsModel" />
+            type="com.antonioleiva.materializeyourapp.models.NewsModel"/>
     </data>
 
     <FrameLayout
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/black"
                 android:scaleType="centerCrop"
-                android:src="@{news.imageUrl}" />
+                android:src="@{news.imageUrl}"/>
 
             <TextView
                 android:id="@+id/text"
@@ -53,7 +53,7 @@
                 android:maxLines="2"
                 android:padding="@dimen/spacing_large"
                 android:text="@{news.text}"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"/>
 
         </LinearLayout>
 

@@ -19,6 +19,8 @@ package com.antonioleiva.materializeyourapp.models;
 import android.databinding.BindingAdapter;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.Spanned;
+import android.text.TextUtils;
 
 import com.antonioleiva.materializeyourapp.widgets.SquareImageView;
 import com.squareup.picasso.Picasso;
@@ -38,9 +40,9 @@ public class NewsModel implements Parcelable {
     };
     private String text;
     private String image;
-    private String content;
+    private Spanned content;
 
-    public NewsModel(String text, String image, String content) {
+    public NewsModel(String text, String image, Spanned content) {
         this.text = text;
         this.image = image;
         this.content = content;
@@ -49,7 +51,7 @@ public class NewsModel implements Parcelable {
     protected NewsModel(Parcel in) {
         text = in.readString();
         image = in.readString();
-        content = in.readString();
+        content = (Spanned) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
     }
 
     @BindingAdapter({"android:src"})
@@ -67,7 +69,7 @@ public class NewsModel implements Parcelable {
         return image;
     }
 
-    public String getContent() {
+    public Spanned getContent() {
         return content;
     }
 
@@ -80,6 +82,6 @@ public class NewsModel implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(text);
         dest.writeString(image);
-        dest.writeString(content);
+        TextUtils.writeToParcel(content, dest, flags);
     }
 }

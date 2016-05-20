@@ -53,7 +53,8 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initActivityTransitions();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
@@ -90,7 +91,8 @@ public class DetailActivity extends AppCompatActivity {
         binding.executePendingBindings();
     }
 
-    @Override public boolean dispatchTouchEvent(MotionEvent motionEvent) {
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent motionEvent) {
         try {
             return super.dispatchTouchEvent(motionEvent);
         } catch (NullPointerException e) {

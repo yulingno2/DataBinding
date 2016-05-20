@@ -27,6 +27,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -128,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                 for (NewsBeans.ArticlesBean articlesBean : news.getArticles()) {
                     NewsModel model = new NewsModel(articlesBean.getTitle(),
                             articlesBean.getImages() != null ? articlesBean.getImages().get(0).getUrl() : articlesBean.getListPic(),
-                            articlesBean.getCtext());
+                            Html.fromHtml(articlesBean.getContent()));
                     items.add(model);
                 }
                 RecyclerViewAdapter adapter = new RecyclerViewAdapter(items);
